@@ -6,18 +6,27 @@ const getStream = use('get-stream')
 class PhotoController {
 
   async store({ request, response }) {
-    request.multipart.file('file', {}, await function(file) {
+    let photo = {}
+    request.multipart.file('file', {}, async function(file) {
       const fileContent = await getStream.buffer(file.stream)
       photo.filecontents = fileContent
       photo.type = `${file.type}/${file.subtype}`
     })
-    await request.multipart.process()
     
-    const productPhoto = new Photo()
-    productPhoto.file = photo.filecontents
-    productPhoto.type = photo.type
-    productPhoto.product_name = product.name
-    await productPhoto.save()
+    try {
+      await request.multipart.process()
+    } catch(e) {
+      console.log(e.message)
+    }
+    
+    const photoInstance = new Photo()
+    photoInstance.file = photo.filecontents
+    photoInstance.type = photo.type
+    try {
+      await photoInstance.save()
+    } catch(e) {
+      console.log(e.message)
+    }
     response.status(201)
   }
   

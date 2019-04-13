@@ -77,20 +77,14 @@ export default {
       this.url = URL.createObjectURL(this.photo)
     },
     async upload_photo() {
-      const formData = new FormData()
-      formData.append('file', this.photo)
-      const url = 'http://127.0.0.1:3333/upload'
+      const data = new FormData()
+      data.append('file', this.photo)
       const config = {
         headers: {
           'content-type': 'multipart/form-data'
         }
       }
-      await this.$axios({
-        method: 'post',
-        url: url,
-        data: formData,
-        config: config
-      })
+      await this.$axios.$post('photos', data, config)
     }
   }
 }
