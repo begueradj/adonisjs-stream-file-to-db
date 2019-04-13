@@ -10,6 +10,16 @@
       align-center
     >
       <v-flex
+        v-if="url"
+        xs12
+        sm4
+        offset-sm4
+      >
+        <v-img
+          :src="url"
+        />
+      </v-flex>
+      <v-flex
         xs6
         offset-xs3
       >
@@ -52,6 +62,7 @@
 export default {
   name: 'PhotoUpload',
   data: () => ({
+    url: '',
     photo: '',
     photoName: ''
   }),
@@ -63,6 +74,7 @@ export default {
       this.$emit('input', e.target.files[0])
       this.photo = this.$refs.image.files[0]
       this.photoName = this.photo.name
+      this.url = URL.createObjectURL(this.photo)
     },
     async upload_photo() {
       const formData = new FormData()
