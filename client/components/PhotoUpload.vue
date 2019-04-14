@@ -14,7 +14,11 @@
         xs12
         sm4
       >
-        <span>Client</span>
+        <span
+          class="font-weight-bold"
+        >
+          Client
+        </span>
         <v-img
           :src="url"
           contain
@@ -73,6 +77,7 @@
       >
         <span
           v-if="photoId"
+          class="font-weight-bold"
         >
           Server
         </span>
