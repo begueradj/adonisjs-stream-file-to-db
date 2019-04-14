@@ -1,7 +1,7 @@
 'use strict'
 
 const Photo = use('App/Models/Photo')
-const Database = use('Database')
+// const Database = use('Database')
 const getStream = use('get-stream')
 
 class PhotoController {
@@ -32,9 +32,11 @@ class PhotoController {
   }
 
   async show({ request, response, params }) {
-    // const photo = await Photo.find(params.id)
     try {
-      // const photo = await Database.table('photos').select('file').where('id', params.id)
+      // const photo = await Database
+      //  .table('photos')
+      //  .select('file')
+      //  .where('id', params.id)
       const photo = await Photo.find(params.id)
       response.header('content-type', 'image/jpg')
       response.header('content-length', Buffer.byteLength(photo.file))
