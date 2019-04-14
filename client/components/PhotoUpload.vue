@@ -13,15 +13,16 @@
         v-if="url"
         xs12
         sm4
-        offset-sm4
       >
+        <span>Client</span>
         <v-img
           :src="url"
+          contain
         />
       </v-flex>
       <v-flex
-        xs6
-        offset-xs3
+        xs12
+        sm4
       >
         <v-text-field
           v-model="photoName"
@@ -41,7 +42,8 @@
           @change="imageSelected"
         >
         <v-btn
-          class="upload-button"
+          class="white--text"
+          round
           color="indigo"
           @click="upload_photo"
         >
@@ -53,6 +55,37 @@
             cloud_upload
           </v-icon>
         </v-btn>
+        <v-btn
+          v-if="url"
+          color="indigo"
+          round
+          class="white--text"
+          @click="loadPhotoFromServer"
+        >
+          Download
+          <v-icon
+            right
+            class="download"
+          >
+            cloud_upload
+          </v-icon>
+        </v-btn>
+      </v-flex>
+      <v-flex
+        v-if="url"
+        xs12
+        sm4
+      >
+        <span
+          v-if="photoId"
+        >
+          Server
+        </span>
+        <v-img
+          v-if="photoId"
+          :src="`${$axios.defaults.baseURL}/photos/${photoId}`"
+          contain
+        />
       </v-flex>
     </v-layout>
   </v-container>
@@ -64,18 +97,22 @@ export default {
   data: () => ({
     url: '',
     photo: '',
-    photoName: ''
+    photoName: '',
+    photoId: 0
   }),
   methods: {
+
     selectImage() {
       this.photo = this.$refs.image.click()
     },
+
     imageSelected(e) {
       this.$emit('input', e.target.files[0])
       this.photo = this.$refs.image.files[0]
       this.photoName = this.photo.name
       this.url = URL.createObjectURL(this.photo)
     },
+
     async upload_photo() {
       const data = new FormData()
       data.append('file', this.photo)
@@ -85,6 +122,10 @@ export default {
         }
       }
       await this.$axios.$post('photos', data, config)
+    },
+
+    loadPhotoFromServer() {
+      this.photoId = 1
     }
   }
 }
@@ -97,8 +138,7 @@ export default {
  *{
      text-transform: none !important;
  }
- .upload-button {
-     border-radius: 50px;
-     color: white;
+ .download {
+     transform: rotate(180deg)
  }
  </style>
