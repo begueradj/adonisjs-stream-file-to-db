@@ -38,7 +38,7 @@ class PhotoController {
       //  .select('file')
       //  .where('id', params.id)
       const photo = await Photo.find(params.id)
-      response.header('content-type', 'image/jpg')
+      response.header('content-type', `${photo.type}/${photo.subtype}`)
       response.header('content-length', Buffer.byteLength(photo.file))
       // response.send(photo[0].file)
       response.send(photo.file)
