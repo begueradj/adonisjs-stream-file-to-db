@@ -42,14 +42,11 @@
           @change="imageSelected"
         >
         <v-btn
-          class="white--text"
           round
           color="indigo"
-          @click="upload_photo"
+          @click="uploadPhoto"
         >
-          Upload
           <v-icon
-            right
             color="white"
           >
             cloud_upload
@@ -59,12 +56,10 @@
           v-if="url"
           color="indigo"
           round
-          class="white--text"
           @click="loadPhotoFromServer"
         >
-          Download
           <v-icon
-            right
+            color="white"
             class="download"
           >
             cloud_upload
@@ -113,7 +108,7 @@ export default {
       this.url = URL.createObjectURL(this.photo)
     },
 
-    async upload_photo() {
+    async uploadPhoto() {
       const data = new FormData()
       data.append('file', this.photo)
       const config = {
