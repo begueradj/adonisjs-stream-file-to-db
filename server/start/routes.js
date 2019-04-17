@@ -21,4 +21,4 @@ Route.get('/', () => {
 })
 
 Route.resource('photos', 'PhotoController')
-  .apiOnly()
+  .only(['store', 'show'])
